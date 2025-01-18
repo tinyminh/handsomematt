@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Media Player</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #282c34;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #61dafb;
+            margin: 0;
+        }
+        #mediaPlayer {
+            text-align: center;
+            background-color: #20232a;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        #fileInput, #subtitleInput {
+            margin: 20px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #61dafb;
+            color: #20232a;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #fileInput:hover, #subtitleInput:hover {
+            background-color: #21a1f1;
+        }
+        audio {
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        #subtitleContainer {
+            margin-top: 20px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="mediaPlayer">
+        <h1>HTML Media Player</h1>
+        <input type="file" id="fileInput" accept="audio/*">
+        <audio id="audioPlayer" controls>
+            Your browser does not support the audio element.
+        </audio>
+        <div id="subtitleContainer"></div>
+        <input type="text" id="subtitleInput" placeholder="Enter subtitle text">
+        <button id="addSubtitleButton">Add Subtitle</button>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const subtitleContainer = document.getElementById('subtitleContainer');
+        const subtitleInput = document.getElementById('subtitleInput');
+        const addSubtitleButton = document.getElementById('addSubtitleButton');
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const fileURL = URL.createObjectURL(file);
+                audioPlayer.src = fileURL;
+                audioPlayer.play();
+            }
+        });
+
+        addSubtitleButton.addEventListener('click', () => {
+            const subtitleText = subtitleInput.value;
+            if (subtitleText) {
+                const subtitleElement = document.createElement('div');
+                subtitleElement.textContent = subtitleText;
+                subtitleContainer.appendChild(subtitleElement);
+                subtitleInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
